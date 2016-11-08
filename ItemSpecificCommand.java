@@ -1,6 +1,3 @@
-
-package zeitz_borkv3;
-
 class ItemSpecificCommand extends Command {
 
     private String verb;

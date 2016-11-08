@@ -1,6 +1,3 @@
-
-package zeitz_borkv3;
-
 class TakeCommand extends Command {
 
     private String itemName;
