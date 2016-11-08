@@ -1,6 +1,4 @@
 
-package zeitz_borkv3;
-
 class DropCommand extends Command {
 
     private String itemName;

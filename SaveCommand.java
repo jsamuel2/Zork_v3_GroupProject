@@ -1,6 +1,3 @@
-
-package zeitz_borkv3;
-
 class SaveCommand extends Command {
 
     private static String DEFAULT_SAVE_FILENAME = "bork";

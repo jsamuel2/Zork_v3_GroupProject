@@ -1,6 +1,3 @@
-
-package zeitz_borkv3;
-
 class MovementCommand extends Command {
 
     private String dir;
