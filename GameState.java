@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.Hashtable;
 
 public class GameState {
 
@@ -27,6 +28,39 @@ public class GameState {
     private ArrayList<Item> inventory;
     private Room adventurersCurrentRoom;
 
+    /** 
+    * Final int variable that stores the maximum weight that an adventururer can carry
+    */
+    static final int MAX_WEIGHT;
+    
+    /**
+    * Variable that stores the current weight of the adventurer's inventory
+    */
+    private int currrentWeight;
+    
+    /** 
+    * A private variable that will store the score of the adventurer, this will then be used
+    * as a key to retrieve the rank from the Rank hashtable
+    */
+    private int score;
+    
+    /**
+    * A private variable that will store the score of the adventurer, this will then be used
+    * as a key to retrieve the health from the healthMessage hashtable
+    */
+    private int health;
+    
+    /**
+    *Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
+    */
+    private hashtable<int,String> healthStatus;
+    
+    /**
+    *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
+    */
+    private hashtable<int,String> adventurerRank;
+    
+    
     static synchronized GameState instance() {
         if (theInstance == null) {
             theInstance = new GameState();
@@ -160,5 +194,47 @@ public class GameState {
     Dungeon getDungeon() {
         return dungeon;
     }
+    
+    /**
+    *Getter method that will return the current health that is an int
+    *@return int current health
+    */
+    public int getHealth()
+    {}
+    
+    /**
+    * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
+    *@return String message regarding adventurer health
+    */
+    public String getHealthMessage()
+    {}
 
+    /**
+    *Getter method that will return the current score that is an int
+    *@return int current score
+    */
+    public int getScore()
+    {}
+    
+    /**
+    * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
+    *@return String message regarding adventurer rank
+    */
+    public String getRank()
+    
+    /**
+    * Getter method that will return an int of the adventurer's total inventory weight
+    *@return String message regarding adventurer rank
+    */
+    public int getInventoryWeight()
+    {}
+    
+    /**
+    * Method that will check the current weight of inventory is lower than MAX_WEIGHT
+    *@return boolean true if current weight is less than MAX_WEIGHT, false if greater than MAX_WEIGHT
+    */
+    public boolean checkWeight(int max_weight)
+    {}
+   
+    
 }
