@@ -15,6 +15,19 @@ public class Room {
     private ArrayList<Item> contents;
     private ArrayList<Exit> exits;
 
+    /**
+    *An arraylist of the NPCs that are in the room
+    *@author Daniel Zamojda
+    */
+    private ArrayList<NPC> npcs;
+    
+    /**
+    *A boolean that is toggled on if the room needs a light source to get its contents, 
+    *or off if the adventurer is carrying a light source
+    *@author Daniel Zamojda
+    */
+    private boolean isDark;
+    
     Room(String title) {
         init();
         this.title = title;
@@ -34,10 +47,11 @@ public class Room {
         @throws NoRoomException The reader object is not positioned at the
         start of a room entry. A side effect of this is the reader's cursor
         is now positioned one line past where it was.
+        @param isDark boolean that tells if it requires a lightsource or not
         @throws IllegalDungeonFormatException A structural problem with the
         dungeon file itself, detected when trying to read this room.
      */
-    Room(Scanner s, Dungeon d, boolean initState) throws NoRoomException,
+    Room(Scanner s, Dungeon d, boolean initState, boolean isDark) throws NoRoomException,
         Dungeon.IllegalDungeonFormatException {
 
         init();
@@ -183,4 +197,16 @@ public class Room {
     ArrayList<Item> getContents() {
         return contents;
     }
+    
+    /**
+    *A method that sets the boolean variable isDark to either true or false,
+    *if true the room requires a lightsource to view its contents,
+    *if false the room may be viewed normally
+    *@author Daniel Zamojda
+    *@return void
+    */
+    public void setIsDark()
+    {}
+        
+    
 }
