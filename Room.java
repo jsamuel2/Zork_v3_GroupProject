@@ -207,6 +207,23 @@ public class Room {
     */
     public void setIsDark()
     {}
-        
+    
+    /**
+    *Method that will return the NPC's that are in the room from the NPC arraylist
+    *@return NPC's in the room
+    *@author Daniel Zamojda
+    */
+    public NPC getNPCs()
+    {}
+    
+    /**
+    *Method that will add the NPC's to the NPC arraylist
+    *@param An NPC will be added to the room
+    *@return void
+    *@author Daniel Zamojda
+    */
+    public void addNPCs(NPC npc)
+    {}
+    
     
 }
