@@ -36,7 +36,7 @@ public class Room {
     Room(Scanner s, Dungeon d) throws NoRoomException,
         Dungeon.IllegalDungeonFormatException {
 
-        this(s, d, true);
+        this(s, d, true,false);
     }
 
     /** Given a Scanner object positioned at the beginning of a "room" file
