@@ -77,28 +77,7 @@ public class GameState
         inventory = new ArrayList<Item>();
 
 
-        int a = 5;
-        Integer aI = a;
-        int b = 10;
-        Integer bI = b;
-        int c = 15;
-        Integer cI = c;
-        int d = 20;
-        Integer dI = d;
-        int e = 25;
-        Integer eI = e;
 
-        String aS = "You are a scrub with no points";
-        String bS = "You're finally getting the hang of it, but you still need to get good";
-        String cS = "Good job there bud on not getting killed";
-        String dS = "If you got this far you might actually win";
-        String eS = "You are a great and respected Knight";
-
-        adventurerRank.put(aI, aS);
-        adventurerRank.put(bI, bS);
-        adventurerRank.put(cI, cS);
-        adventurerRank.put(dI, dS);
-        adventurerRank.put(eI, eS);
     }
 
     void restore(String filename) throws FileNotFoundException,
@@ -165,6 +144,29 @@ public class GameState
     void initialize(Dungeon dungeon) {
         this.dungeon = dungeon;
         adventurersCurrentRoom = dungeon.getEntry();
+
+        int a = 5;
+        Integer aI = a;
+        int b = 10;
+        Integer bI = b;
+        int c = 15;
+        Integer cI = c;
+        int d = 20;
+        Integer dI = d;
+        int e = 25;
+        Integer eI = e;
+
+        String aS = "You are a scrub with no points";
+        String bS = "You're finally getting the hang of it, but you still need to get good";
+        String cS = "Good job there bud on not getting killed";
+        String dS = "If you got this far you might actually win";
+        String eS = "You are a great and respected Knight";
+
+        adventurerRank.put(aI, aS);
+        adventurerRank.put(bI, bS);
+        adventurerRank.put(cI, cS);
+        adventurerRank.put(dI, dS);
+        adventurerRank.put(eI, eS);
     }
 
     ArrayList<String> getInventoryNames() {
