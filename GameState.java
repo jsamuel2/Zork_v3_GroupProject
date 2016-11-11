@@ -31,8 +31,10 @@ public class GameState {
     /** 
     * Final int variable that stores the maximum weight that an adventururer can carry
     */
-    static final int MAX_WEIGHT;
-    
+    static final int MAX_WEIGHT = 20;
+
+    static final int MAX_HEALTH = 25;
+
     /**
     * Variable that stores the current weight of the adventurer's inventory
     */
@@ -53,12 +55,12 @@ public class GameState {
     /**
     *Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
     */
-    private hashtable<int,String> healthStatus;
+    private Hashtable<Integer,String> healthStatus;
     
     /**
     *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
     */
-    private hashtable<int,String> adventurerRank;
+    private Hashtable<Integer,String> adventurerRank;
     
     
     static synchronized GameState instance() {
@@ -199,42 +201,39 @@ public class GameState {
     *Getter method that will return the current health that is an int
     *@return int current health
     */
-    public int getHealth()
-    {}
-    
+    public int getHealth() { return this.health; }
+
+    public void changeHealth(int healthPoints) { health += healthPoints; }
+
     /**
     * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
     *@return String message regarding adventurer health
     */
-    public String getHealthMessage()
-    {}
+    public String getHealthMessage() { return this.healthStatus.get(getHealth()); }
 
     /**
     *Getter method that will return the current score that is an int
     *@return int current score
     */
-    public int getScore()
-    {}
+    public int getScore() { return this.score; }
     
     /**
     * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
     *@return String message regarding adventurer rank
     */
-    public String getRank()
+    public String getRank() { return this.adventurerRank.get(getScore()); }
     
     /**
     * Getter method that will return an int of the adventurer's total inventory weight
     *@return String message regarding adventurer rank
     */
-    public int getInventoryWeight()
-    {}
+    public int getInventoryWeight() { return this.currrentWeight; }
     
     /**
     * Method that will check the current weight of inventory is lower than MAX_WEIGHT
     *@return boolean true if current weight is less than MAX_WEIGHT, false if greater than MAX_WEIGHT
     */
-    public boolean checkWeight(int max_weight)
-    {}
+    public boolean checkWeight() { return currrentWeight <= MAX_WEIGHT; }
    
     
 }
