@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.Hashtable;
-import java.util.regex.*;
 
 public class Item {
 
@@ -14,7 +13,7 @@ public class Item {
       will be the event that is taking place. The value will be what the method needs
       (as explained below) in order to accomplish the event.
     */
-    private Hashtable<String,String> events;
+    private Hashtable<String,String[]> events;
 
     Item(Scanner s) throws NoItemException,
         Dungeon.IllegalDungeonFormatException {
@@ -41,14 +40,13 @@ public class Item {
             if(verbLine.contains("[")) {
                 String temp = verbLine.substring(verbLine.indexOf('[')+1,verbLine.indexOf(']'));
                 String[] eventList = temp.split(",");
-                for(String event : eventList) {
-                    events.put(verbLine.substring(0,verbLine.indexOf('[')+1), event);
-                }
+                    events.put(verbLine.substring(0,verbLine.indexOf('[')+1), eventList);
                 String[] verbParts = verbLine.split(":");
                 verbParts[0] = verbParts[0].substring(0,verbParts[0].indexOf('('));
+                messages.put(verbParts[0],verbParts[1]);
             } else {
                 String[] verbParts = verbLine.split(":");
-                messages.put(verbParts[0], verbParts[1]);
+                messages.put(verbParts[0],verbParts[1]);
             }
             verbLine = s.nextLine();
         }
@@ -77,7 +75,7 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String score() {}
+    public String score() { return null; }
     
     /*This method returns a string indicating how much the player has been wounded
       and by what item (the item this method was called on). Using the event hashtable,
@@ -101,7 +99,7 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String disappear(){}
+    public String disappear(){ return null; }
     
     /*This method returns a string indicating what item has replaced the item the method
       was called on. The hashtable's value of the key will be the name of the
@@ -111,7 +109,7 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String transform(String newItemName){}
+    public String transform(String newItemName){ return null; }
     
     /*Finally, the teleport method will return a String letting the adventurer know they
       have teleported. The String value in the hashtable will include the name of the room
@@ -121,7 +119,7 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String teleport(String newRoom){}
+    public String teleport(String newRoom){ return null; }
 
-    public Hashtable getEvents() { return this.events; }
+    public String[] getEventsForVerb(String verb) { return events.get(verb); }
 }

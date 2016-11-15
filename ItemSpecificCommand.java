@@ -26,22 +26,22 @@ class ItemSpecificCommand extends Command {
         }
         
         String msg = itemReferredTo.getMessageForVerb(verb);
-        Hashtable events = itemReferredTo.getEvents();
-        if(events.containsKey(verb)) {
-            String event = (String)events.get(verb);
-            switch(event.substring(0,event.indexOf('('))) {
-                case "Transform":
-                    msg += "\n" + itemReferredTo.transform(event.substring(event.indexOf("(")+1,event.length()-1));
-                    break;
-                case "Wound":
-                    msg += "\n" + itemReferredTo.wound(Integer.parseInt(event.substring(event.indexOf("(")+1,event.length()-1)));
-                    break;
-                case "Teleport":
-                    msg += "\n" + itemReferredTo.teleport(event.substring(event.indexOf("(")+1,event.length()-1));
-                    break;
-                case "Disappear":
-                    msg += "\n" + itemReferredTo.disappear();
-                    break;
+        String[] events = itemReferredTo.getEventsForVerb(verb);
+        if(events != null) {
+            for(String event : events) {
+                switch(event.substring(0,event.indexOf('('))) {
+                    case "Transform":
+                        msg += "\n" + itemReferredTo.transform(event.substring(event.indexOf("(")+1,event.length()-1));
+                        break;
+                    case "Wound":
+                        msg += "\n" + itemReferredTo.wound(Integer.parseInt(event.substring(event.indexOf("(")+1,event.length()-1)));
+                        break;
+                    case "Teleport":
+                        msg += "\n" + itemReferredTo.teleport(event.substring(event.indexOf("(")+1,event.length()-1));
+                        break;
+                    case "Disappear":
+                        msg += "\n" + itemReferredTo.disappear();
+                        break;
             }
         }
         return (msg == null ? 

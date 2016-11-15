@@ -92,12 +92,12 @@ public class Dungeon {
 
         try {
             // Instantiate and add first room (the entry).
-            entry = new Room(s, this, initState);
+            entry = new Room(s, this, initState, false);
             add(entry);
 
             // Instantiate and add other rooms.
             while (true) {
-                add(new Room(s, this, initState));
+                add(new Room(s, this, initState, false));
             }
         } catch (Room.NoRoomException e) {  /* end of rooms */ }
 
@@ -110,7 +110,7 @@ public class Dungeon {
         try {
             // Instantiate exits.
             while (true) {
-                Exit exit = new Exit(s, this);
+                Exit exit = new Exit(s, this, false);
             }
         } catch (Exit.NoExitException e) {  /* end of exits */ }
 

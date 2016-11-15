@@ -36,7 +36,7 @@ public class Room {
     Room(Scanner s, Dungeon d) throws NoRoomException,
         Dungeon.IllegalDungeonFormatException {
 
-        this(s, d, true);
+        this(s, d, true, false);
     }
 
     /** Given a Scanner object positioned at the beginning of a "room" file
@@ -205,16 +205,14 @@ public class Room {
     *@author Daniel Zamojda
     *@return void
     */
-    public void setIsDark()
-    {}
+    public void setIsDark() {}
     
     /**
     *Method that will return the NPC's that are in the room from the NPC arraylist
     *@return NPC's in the room
     *@author Daniel Zamojda
     */
-    public NPC getNPCs()
-    {}
+    public ArrayList<NPC> getNPCs() { return npcs; }
     
     /**
     *Method that will add the NPC's to the NPC arraylist
@@ -222,8 +220,7 @@ public class Room {
     *@return void
     *@author Daniel Zamojda
     */
-    public void addNPCs(NPC npc)
-    {}
+    public void addNPCs(NPC npc) {}
     
     
 }
