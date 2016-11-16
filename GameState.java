@@ -1,14 +1,13 @@
+import java.util.Scanner;
+import java.util.ArrayList;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.Hashtable;
 
-
-public class GameState
-{
-
+public class GameState {
 
     public static class IllegalSaveFormatException extends Exception {
         public IllegalSaveFormatException(String e) {
@@ -32,8 +31,10 @@ public class GameState
     /** 
     * Final int variable that stores the maximum weight that an adventururer can carry
     */
-    static final int MAX_WEIGHT;
-    
+    static final int MAX_WEIGHT = 20;
+
+    static final int MAX_HEALTH = 25;
+
     /**
     * Variable that stores the current weight of the adventurer's inventory
     */
@@ -44,8 +45,7 @@ public class GameState
     * as a key to retrieve the rank from the Rank hashtable
     */
     private int score;
-
-    final int max_score = 25;
+    
     /**
     * A private variable that will store the score of the adventurer, this will then be used
     * as a key to retrieve the health from the healthMessage hashtable
@@ -55,29 +55,23 @@ public class GameState
     /**
     *Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
     */
-    private hashtable<Integer,String> healthStatus;
+    private Hashtable<Integer,String> healthStatus;
     
     /**
     *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
     */
-    private hashtable<Integer, String> adventurerRank = new Hashtable<Integer, String>();
-
-
-    static synchronized GameState instance()
-    {
+    private Hashtable<Integer,String> adventurerRank;
+    
+    
+    static synchronized GameState instance() {
         if (theInstance == null) {
             theInstance = new GameState();
         }
         return theInstance;
     }
 
-
-
     private GameState() {
         inventory = new ArrayList<Item>();
-
-
-
     }
 
     void restore(String filename) throws FileNotFoundException,
@@ -144,29 +138,6 @@ public class GameState
     void initialize(Dungeon dungeon) {
         this.dungeon = dungeon;
         adventurersCurrentRoom = dungeon.getEntry();
-
-        int a = 5;
-        Integer aI = a;
-        int b = 10;
-        Integer bI = b;
-        int c = 15;
-        Integer cI = c;
-        int d = 20;
-        Integer dI = d;
-        int e = 25;
-        Integer eI = e;
-
-        String aS = "You are a scrub with no points";
-        String bS = "You're finally getting the hang of it, but you still need to get good";
-        String cS = "Good job there bud on not getting killed";
-        String dS = "If you got this far you might actually win";
-        String eS = "You are a great and respected Knight";
-
-        adventurerRank.put(aI, aS);
-        adventurerRank.put(bI, bS);
-        adventurerRank.put(cI, cS);
-        adventurerRank.put(dI, dS);
-        adventurerRank.put(eI, eS);
     }
 
     ArrayList<String> getInventoryNames() {
@@ -230,54 +201,39 @@ public class GameState
     *Getter method that will return the current health that is an int
     *@return int current health
     */
-    public int getHealth()
-    {}
-    
+    public int getHealth() { return this.health; }
+
+    public void changeHealth(int healthPoints) { health += healthPoints; }
+
     /**
     * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
     *@return String message regarding adventurer health
     */
-    public String getHealthMessage()
-    {}
+    public String getHealthMessage() { return this.healthStatus.get(getHealth()); }
 
     /**
     *Getter method that will return the current score that is an int
     *@return int current score
     */
-    public int getScore()
-    {
-        return score;
-    }
+    public int getScore() { return this.score; }
     
     /**
     * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
     *@return String message regarding adventurer rank
     */
-    public String getRank()
-    {
-
-        int temp = this.getScore();
-        if (temp%5 == 0)
-        {
-            Integer x = temp;
-            return adventurerRank.get(x);
-        }
-        else return null;
-    }
+    public String getRank() { return this.adventurerRank.get(getScore()); }
     
     /**
     * Getter method that will return an int of the adventurer's total inventory weight
     *@return String message regarding adventurer rank
     */
-    public int getInventoryWeight()
-    {}
+    public int getInventoryWeight() { return this.currrentWeight; }
     
     /**
     * Method that will check the current weight of inventory is lower than MAX_WEIGHT
     *@return boolean true if current weight is less than MAX_WEIGHT, false if greater than MAX_WEIGHT
     */
-    public boolean checkWeight(int max_weight)
-    {}
+    public boolean checkWeight() { return currrentWeight <= MAX_WEIGHT; }
    
     
 }
