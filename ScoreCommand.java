@@ -18,8 +18,6 @@ public class ScoreCommand extends Command {
      *
      * @return A string value from the GameState class that holds the user's health status.
      */
-    public String execute() {
-        return "";
-    }
+    public String execute() { return "You have " + GameState.instance().getScore() + ".\n" + GameState.instance().getRank(); }
 }
 

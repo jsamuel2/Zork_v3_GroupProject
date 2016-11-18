@@ -17,6 +17,6 @@ public class HealthCommand extends Command {
      * @return A string value from the GameState class that holds the user's health status.
      */
     public String execute() {
-        return "";
+        return GameState.instance().getHealthMessage();
     }
 }
