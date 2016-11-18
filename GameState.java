@@ -22,6 +22,8 @@ public class GameState {
     static String ADVENTURER_MARKER = "Adventurer:";
     static String CURRENT_ROOM_LEADER = "Current room: ";
     static String INVENTORY_LEADER = "Inventory: ";
+    static String SCORE_LEADER = "Score: ";
+    static String HEALTH_LEADER = "Health: ";
 
     private static GameState theInstance;
     private Dungeon dungeon;
@@ -132,6 +134,8 @@ public class GameState {
             }
             w.println(inventory.get(inventory.size()-1).getPrimaryName());
         }
+        w.println(HEALTH_LEADER + health);
+        w.println(SCORE_LEADER + score);
         w.close();
     }
 
