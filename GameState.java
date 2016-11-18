@@ -51,11 +51,15 @@ public class GameState {
     * as a key to retrieve the health from the healthMessage hashtable
     */
     private int health;
-    
+    final int max_health = 25;
     /**
     *Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
     */
+<<<<<<< Updated upstream
     private Hashtable<Integer,String> healthStatus;
+=======
+    private hashtable<Integer,String> healthStatus = new Hashtable<Integer, String>();
+>>>>>>> Stashed changes
     
     /**
     *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
@@ -138,6 +142,45 @@ public class GameState {
     void initialize(Dungeon dungeon) {
         this.dungeon = dungeon;
         adventurersCurrentRoom = dungeon.getEntry();
+<<<<<<< Updated upstream
+=======
+
+        int a = 5;
+        Integer aI = a;
+        int b = 10;
+        Integer bI = b;
+        int c = 15;
+        Integer cI = c;
+        int d = 20;
+        Integer dI = d;
+        int e = 25;
+        Integer eI = e;
+
+        String aS = "You are a scrub with no points";
+        String bS = "You're finally getting the hang of it, but you still need to get good";
+        String cS = "Good job there bud on not getting killed";
+        String dS = "If you got this far you might actually win";
+        String eS = "You are a great and respected Knight";
+
+        adventurerRank.put(aI, aS);
+        adventurerRank.put(bI, bS);
+        adventurerRank.put(cI, cS);
+        adventurerRank.put(dI, dS);
+        adventurerRank.put(eI, eS);
+
+        String aH = "You start to feel cold, you're losing conciousness, confused and fearing the end is imminent";
+        String bH = "You're whole body is aching, much more of this and you fear you won't last long.";
+        String cH = "Meh, it's just a flesh wound";
+        String dH = "tis but a scratch";
+        String eH = "You feel one hunna";
+
+        healthStatus.put(aI,aH);
+        healthStatus.put(bI,bH);
+        healthStatus.put(cI,cH);
+        healthStatus.put(dI,dH);
+        healthStatus.put(eI,eH);
+
+>>>>>>> Stashed changes
     }
 
     ArrayList<String> getInventoryNames() {
@@ -201,15 +244,36 @@ public class GameState {
     *Getter method that will return the current health that is an int
     *@return int current health
     */
+<<<<<<< Updated upstream
     public int getHealth() { return this.health; }
 
     public void changeHealth(int healthPoints) { health += healthPoints; }
 
+=======
+    public int getHealth()
+    {
+        return health;
+    }
+    
+>>>>>>> Stashed changes
     /**
     * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
     *@return String message regarding adventurer health
     */
+<<<<<<< Updated upstream
     public String getHealthMessage() { return this.healthStatus.get(getHealth()); }
+=======
+    public String getHealthMessage()
+    {
+        if(health > 0)
+        {
+            int temp = score%5;
+            return healthStatus.get(x);
+            }
+        }
+        return null;
+    }
+>>>>>>> Stashed changes
 
     /**
     *Getter method that will return the current score that is an int
@@ -221,7 +285,16 @@ public class GameState {
     * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
     *@return String message regarding adventurer rank
     */
+<<<<<<< Updated upstream
     public String getRank() { return this.adventurerRank.get(getScore()); }
+=======
+    public String getRank()
+    {
+        int temp = score%5;
+        adventurerRank.get(temp);
+        return null;
+    }
+>>>>>>> Stashed changes
     
     /**
     * Getter method that will return an int of the adventurer's total inventory weight
