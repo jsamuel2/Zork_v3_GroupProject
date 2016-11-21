@@ -40,7 +40,7 @@ class ItemSpecificCommand extends Command {
                         msg += "\n" + itemReferredTo.teleport(event.substring(event.indexOf("(") + 1, event.length() - 1));
                         break;
                     case "Disappear":
-                        msg += "\n" + itemReferredTo.disappear();
+                        msg += "\n" + itemReferredTo.disappear(itemReferredTo);
                         break;
                 }
             }

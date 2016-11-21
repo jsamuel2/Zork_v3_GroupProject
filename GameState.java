@@ -297,7 +297,9 @@ public class GameState {
 
     }
 
-    
+    public void removeItem(String itemName){
+        inventory.remove(itemName);
+    }
     /**
     * Getter method that will return an int of the adventurer's total inventory weight
     *@return String message regarding adventurer rank

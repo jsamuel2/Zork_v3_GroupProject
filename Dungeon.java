@@ -180,4 +180,8 @@ public class Dungeon {
         }
         return items.get(primaryItemName);
     }
+
+    public void removeItem(String itemName){
+        items.remove(itemName);
+    }
 }

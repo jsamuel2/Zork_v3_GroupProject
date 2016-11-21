@@ -103,7 +103,18 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String disappear(){ return null; }
+    public String disappear(Item item)
+    {
+        GameState current =  GameState.instance();
+        Dungeon currentDungeon = current.getDungeon();
+
+        String output = item.getPrimaryName() + " is gone forever!";
+
+        current.removeItem(item.getPrimaryName());
+        currentDungeon.removeItem(item.getPrimaryName());
+
+        return output;
+    }
     
     /*This method returns a string indicating what item has replaced the item the method
       was called on. The hashtable's value of the key will be the name of the
@@ -113,6 +124,7 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
+
     public String transform(String newItemName){ return null; }
     
     /*Finally, the teleport method will return a String letting the adventurer know they
