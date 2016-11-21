@@ -39,8 +39,10 @@ public class CommandFactory {
         if (parts.length == 2) {
             return new ItemSpecificCommand(verb, noun);
         }
-        if (verb.equals("score"))
-        {
+        if (verb.equals("health")) {
+            return new HealthCommand();
+        }
+        if (verb.equals("score")) {
             return new ScoreCommand();
         }
         return new UnknownCommand(command);

@@ -28,5 +28,6 @@ public class ScoreCommand extends Command {
         output = current.getRank(currentScore);
         return output;
     }
+
 }
 
