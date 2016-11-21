@@ -10,7 +10,9 @@ public class ScoreCommand extends Command {
     /**
      * A simple constructor of ScoreCommand objects
      */
-    public ScoreCommand() {
+    public ScoreCommand()
+    {
+
     }
 
     /**
@@ -18,8 +20,13 @@ public class ScoreCommand extends Command {
      *
      * @return A string value from the GameState class that holds the user's health status.
      */
-    public String execute() {
-        return "";
+    public String execute()
+    {
+        String output = "";
+        GameState current = GameState.instance();
+        int currentScore = current.getScore();
+        output = current.getRank(currentScore);
+        return output;
     }
 }
 

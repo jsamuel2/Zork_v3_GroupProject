@@ -42,7 +42,7 @@ public class Item {
                 String[] eventList = temp.split(",");
                     events.put(verbLine.substring(0,verbLine.indexOf('[')+1), eventList);
                 String[] verbParts = verbLine.split(":");
-                verbParts[0] = verbParts[0].substring(0,verbParts[0].indexOf('('));
+                verbParts[0] = verbParts[0].substring(0,verbParts[0].indexOf('[')); //IndexOutOfBounds Exception when using '(' rather than '['
                 messages.put(verbParts[0],verbParts[1]);
             } else {
                 String[] verbParts = verbLine.split(":");
@@ -75,7 +75,11 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String score() { return null; }
+    public String score()
+    {
+
+        return null;
+    }
     
     /*This method returns a string indicating how much the player has been wounded
       and by what item (the item this method was called on). Using the event hashtable,
@@ -119,7 +123,20 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String teleport(String newRoom){ return null; }
+    public String teleport(String newRoom)
+    {
+        String output = "";
+        GameState current = GameState.instance();
+        Dungeon theDungeon = current.getDungeon();
+        Room setRoom = theDungeon.getRoom(newRoom);
+        current.setAdventurersCurrentRoom(setRoom);
+
+        output = "You have been teleported to a new room! \n ";
+
+        setRoom.describe();
+        System.out.println(output);
+        return "";
+    }
 
     public String[] getEventsForVerb(String verb) { return events.get(verb); }
 }

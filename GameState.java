@@ -1,11 +1,10 @@
-import java.util.Scanner;
-import java.util.ArrayList;
+import java.util.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.Hashtable;
+
 
 public class GameState {
 
@@ -55,12 +54,11 @@ public class GameState {
     /**
     *Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
     */
-<<<<<<< Updated upstream
-    private Hashtable<Integer,String> healthStatus;
-=======
-    private hashtable<Integer,String> healthStatus = new Hashtable<Integer, String>();
->>>>>>> Stashed changes
-    
+
+    Hashtable<Integer, String> healthStatus = new Hashtable();
+
+
+
     /**
     *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
     */
@@ -142,8 +140,6 @@ public class GameState {
     void initialize(Dungeon dungeon) {
         this.dungeon = dungeon;
         adventurersCurrentRoom = dungeon.getEntry();
-<<<<<<< Updated upstream
-=======
 
         int a = 5;
         Integer aI = a;
@@ -180,7 +176,7 @@ public class GameState {
         healthStatus.put(dI,dH);
         healthStatus.put(eI,eH);
 
->>>>>>> Stashed changes
+
     }
 
     ArrayList<String> getInventoryNames() {
@@ -244,57 +240,59 @@ public class GameState {
     *Getter method that will return the current health that is an int
     *@return int current health
     */
-<<<<<<< Updated upstream
-    public int getHealth() { return this.health; }
+    public int getHealth()
+    {
+        return this.health;
+    }
 
     public void changeHealth(int healthPoints) { health += healthPoints; }
 
-=======
-    public int getHealth()
-    {
-        return health;
-    }
     
->>>>>>> Stashed changes
+
     /**
     * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
     *@return String message regarding adventurer health
     */
-<<<<<<< Updated upstream
-    public String getHealthMessage() { return this.healthStatus.get(getHealth()); }
-=======
-    public String getHealthMessage()
+    public String getHealthMessage(int currentHealth)
     {
-        if(health > 0)
+
+        int actualHealth = currentHealth;
+
+        if(currentHealth%5 != 0)
         {
-            int temp = score%5;
-            return healthStatus.get(x);
-            }
+            actualHealth = actualHealth - (currentHealth%5);
         }
-        return null;
+        return healthStatus.get(actualHealth);
+
     }
->>>>>>> Stashed changes
+
 
     /**
     *Getter method that will return the current score that is an int
     *@return int current score
     */
-    public int getScore() { return this.score; }
+    public int getScore()
+    {
+        return this.score;
+    }
     
     /**
     * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
     *@return String message regarding adventurer rank
     */
-<<<<<<< Updated upstream
-    public String getRank() { return this.adventurerRank.get(getScore()); }
-=======
-    public String getRank()
+
+    public String getRank(int currentScore)
     {
-        int temp = score%5;
-        adventurerRank.get(temp);
-        return null;
+        int actualScore = currentScore;
+
+        if(currentScore%5 != 0)
+        {
+            actualScore = actualScore - (currentScore%5);
+        }
+        return adventurerRank.get(actualScore);
+
     }
->>>>>>> Stashed changes
+
     
     /**
     * Getter method that will return an int of the adventurer's total inventory weight
