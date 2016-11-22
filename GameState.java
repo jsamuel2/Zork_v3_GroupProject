@@ -297,7 +297,11 @@ public class GameState {
 
     }
 
-    public void removeItem(String itemName){
+    public void removeItem(String itemName) throws Item.NoItemException
+    {
+        if(inventory.remove(itemName) == false){
+            throw new Item.NoItemException();
+        }
         inventory.remove(itemName);
     }
     /**

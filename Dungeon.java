@@ -181,7 +181,11 @@ public class Dungeon {
         return items.get(primaryItemName);
     }
 
-    public void removeItem(String itemName){
+    public void removeItem(String itemName) throws Item.NoItemException{
+        if(items.remove(itemName) == null){
+            throw new Item.NoItemException();
+        }
         items.remove(itemName);
     }
+
 }

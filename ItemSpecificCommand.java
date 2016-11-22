@@ -16,7 +16,7 @@ class ItemSpecificCommand extends Command {
       will return the string produced from the specific item event that was called
       on the item object. The item events are detailed in the Item class.
     */
-    public String execute() {
+    public String execute() throws Item.NoItemException{
         
         Item itemReferredTo = null;
         try {
