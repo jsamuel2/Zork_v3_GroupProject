@@ -77,8 +77,7 @@ public class Item {
     */
     public String score()
     {
-
-        return null;
+        return events.get("Score");
     }
     
     /*This method returns a string indicating how much the player has been wounded
