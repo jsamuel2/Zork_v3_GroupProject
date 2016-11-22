@@ -39,18 +39,6 @@ public class Room {
         this(s, d, true, false);
     }
 
-    /** Given a Scanner object positioned at the beginning of a "room" file
-        entry, read and return a Room object representing it. 
-        @param d The containing {@link edu.umw.stephen.bork.Dungeon} object, 
-        necessary to retrieve {@link edu.umw.stephen.bork.Item} objects.
-        @param initState should items listed for this room be added to it?
-        @throws NoRoomException The reader object is not positioned at the
-        start of a room entry. A side effect of this is the reader's cursor
-        is now positioned one line past where it was.
-        @param isDark boolean that tells if it requires a lightsource or not
-        @throws IllegalDungeonFormatException A structural problem with the
-        dungeon file itself, detected when trying to read this room.
-     */
     Room(Scanner s, Dungeon d, boolean initState, boolean isDark) throws NoRoomException,
         Dungeon.IllegalDungeonFormatException {
 
@@ -197,7 +185,7 @@ public class Room {
     ArrayList<Item> getContents() {
         return contents;
     }
-    
+
     /**
     *A method that sets the boolean variable isDark to either true or false,
     *if true the room requires a lightsource to view its contents,
@@ -216,7 +204,7 @@ public class Room {
     
     /**
     *Method that will add the NPC's to the NPC arraylist
-    *@param An NPC will be added to the room
+    *@param  //NPC will be added to the room
     *@return void
     *@author Daniel Zamojda
     */

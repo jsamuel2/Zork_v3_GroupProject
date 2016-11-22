@@ -16,7 +16,7 @@ class ItemSpecificCommand extends Command {
       will return the string produced from the specific item event that was called
       on the item object. The item events are detailed in the Item class.
     */
-    public String execute() {
+    public String execute() throws Item.NoItemException{
         
         Item itemReferredTo = null;
         try {
@@ -40,7 +40,7 @@ class ItemSpecificCommand extends Command {
                         msg += "\n" + itemReferredTo.teleport(event.substring(event.indexOf("(") + 1, event.length() - 1));
                         break;
                     case "Disappear":
-                        msg += "\n" + itemReferredTo.disappear();
+                        msg += "\n" + itemReferredTo.disappear(itemReferredTo);
                         break;
                 }
             }
