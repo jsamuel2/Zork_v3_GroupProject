@@ -42,6 +42,8 @@ class ItemSpecificCommand extends Command {
                     case "Disappear":
                         msg += "\n" + itemReferredTo.disappear(itemReferredTo);
                         break;
+                    case "Score":
+                        GameState.instance().setScore(Integer.parseInt(event.substring(event.indexOf("(") + 1, event.length() - 1)));
                 }
             }
         }

@@ -40,7 +40,8 @@ public class Item {
             if(verbLine.contains("[")) {
                 String temp = verbLine.substring(verbLine.indexOf('[')+1,verbLine.indexOf(']'));
                 String[] eventList = temp.split(",");
-                    events.put(verbLine.substring(0,verbLine.indexOf('[')+1), eventList);
+                    events.put(verbLine.substring(0,verbLine.indexOf('[')), eventList);
+                verbLine = verbLine.substring(0,verbLine.indexOf('[')+1) + verbLine.substring(verbLine.indexOf('['));
                 String[] verbParts = verbLine.split(":");
                 verbParts[0] = verbParts[0].substring(0,verbParts[0].indexOf('[')); //IndexOutOfBounds Exception when using '(' rather than '['
                 messages.put(verbParts[0],verbParts[1]);
@@ -65,6 +66,19 @@ public class Item {
 
     public String toString() {
         return primaryName;
+    }
+    
+    /*This method returns a string indicating the score achieved from retrieving
+      the item this method was called on. It will use a separate hashtable indicated
+      above in order to determine it's score point total(probably only 1). Then,
+      Gamestate.instance() will be updated.
+      @author Jonathan Samuelsen
+      @author Daniel Zamojda
+      @author Brendon Kertcher
+    */
+    public String score()
+    {
+        return events.get("Score");
     }
     
     /*This method returns a string indicating how much the player has been wounded
