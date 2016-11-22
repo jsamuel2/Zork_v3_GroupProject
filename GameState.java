@@ -316,5 +316,8 @@ public class GameState {
     */
     public boolean checkWeight() { return currrentWeight <= MAX_WEIGHT; }
    
-    
+    public void setScore(int b, boolean c){
+        if (c) {score += b;}
+        else {score -= b;}
+    } 
 }
