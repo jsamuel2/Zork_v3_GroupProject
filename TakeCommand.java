@@ -15,7 +15,6 @@ class TakeCommand extends Command {
                 GameState.instance().getAdventurersCurrentRoom();
             Item theItem = currentRoom.getItemNamed(itemName);
             GameState.instance().addToInventory(theItem);
-            GameState.instance().setScore(int(theItem.score()),true);
             currentRoom.remove(theItem);
             return itemName + " taken.\n";
         } catch (Item.NoItemException e) {

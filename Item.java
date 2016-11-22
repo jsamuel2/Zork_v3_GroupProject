@@ -67,19 +67,6 @@ public class Item {
         return primaryName;
     }
     
-    /*This method returns a string indicating the score achieved from retrieving
-      the item this method was called on. It will use a separate hashtable indicated
-      above in order to determine it's score point total(probably only 1). Then,
-      Gamestate.instance() will be updated.
-      @author Jonathan Samuelsen
-      @author Daniel Zamojda
-      @author Brendon Kertcher
-    */
-    public String score()
-    {
-        return events.get("Score");
-    }
-    
     /*This method returns a string indicating how much the player has been wounded
       and by what item (the item this method was called on). Using the event hashtable,
       it will collect the String, convert it to an integer and update GameState.instance()
