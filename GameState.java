@@ -64,7 +64,7 @@ public class GameState {
     /**
     *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
     */
-    private Hashtable<Integer,String> adventurerRank;
+    Hashtable<Integer,String> adventurerRank = new Hashtable<>();
     
     
     static synchronized GameState instance() {
@@ -316,5 +316,7 @@ public class GameState {
     */
     public boolean checkWeight() { return currrentWeight <= MAX_WEIGHT; }
    
-    
+    public void setScore(int b){
+        score += b;
+    } 
 }
