@@ -40,9 +40,9 @@ public class Item {
             if(verbLine.contains("[")) {
                 String temp = verbLine.substring(verbLine.indexOf('[')+1,verbLine.indexOf(']'));
                 String[] eventList = temp.split(",");
-                    events.put(verbLine.substring(0,verbLine.indexOf('[')+1), eventList);
+                    events.put(verbLine.substring(0,verbLine.indexOf('[')), eventList);
+                verbLine = verbLine.substring(0,verbLine.indexOf('[')+1) + verbLine.substring(verbLine.indexOf('['));
                 String[] verbParts = verbLine.split(":");
-                verbParts[0] = verbParts[0].substring(0,verbParts[0].indexOf('[')); //IndexOutOfBounds Exception when using '(' rather than '['
                 messages.put(verbParts[0],verbParts[1]);
             } else {
                 String[] verbParts = verbLine.split(":");
@@ -75,7 +75,7 @@ public class Item {
       @author Daniel Zamojda
       @author Brendon Kertcher
     */
-    public String score()
+    public String score(int score)
     {
 
         return null;
