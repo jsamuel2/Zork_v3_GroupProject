@@ -56,12 +56,11 @@ public class GameState {
      */
 
     Hashtable<Integer, String> healthStatus = new Hashtable();
-
+    
     /**
     *A boolean to let the dungeon know if the adventurer has a light source
     */
     private boolean hasLightSource;
-
     /**
      * Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
      */
@@ -210,8 +209,6 @@ public class GameState {
         }
         return names;
     }
-
-    public ArrayList<Item> getInventory() { return inventory; }
 
     void addToInventory(Item item) /* throws TooHeavyException */ {
         inventory.add(item);
@@ -414,6 +411,4 @@ public class GameState {
         maxWeight = (int) Math.round( sum *.75);
 
     }
-
-    //fdsfs
 }
