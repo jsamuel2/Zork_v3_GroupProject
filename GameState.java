@@ -29,44 +29,50 @@ public class GameState {
     private ArrayList<Item> inventory;
     private Room adventurersCurrentRoom;
 
-    /** 
-    * Final int variable that stores the maximum weight that an adventururer can carry
-    */
-    static final int MAX_WEIGHT = 20;
-
-    static final int MAX_HEALTH = 25;
+    /**
+     * Final int variable that stores the maximum weight that an adventururer can carry
+     */
+    static final int MAX_SCORE = 25;
+    static int maxWeight = 100;
 
     /**
-    * Variable that stores the current weight of the adventurer's inventory
-    */
-    private int currrentWeight;
-    
-    /** 
-    * A private variable that will store the score of the adventurer, this will then be used
-    * as a key to retrieve the rank from the Rank hashtable
-    */
+     * Variable that stores the current weight of the adventurer's inventory
+     */
+    private int currentWeight;
+
+    /**
+     * A private variable that will store the score of the adventurer, this will then be used
+     * as a key to retrieve the rank from the Rank hashtable
+     */
     private int score;
-    
+
     /**
-    * A private variable that will store the score of the adventurer, this will then be used
-    * as a key to retrieve the health from the healthMessage hashtable
-    */
+     * A private variable that will store the score of the adventurer, this will then be used
+     * as a key to retrieve the health from the healthMessage hashtable
+     */
     private int health;
-    final int max_health = 25;
     /**
-    *Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
-    */
+     * Hashtable that will take in a key, the adventurer's health, and return the correct message based on the adventurer's health
+     */
 
     Hashtable<Integer, String> healthStatus = new Hashtable();
 
-
+    /**
+    *A boolean to let the dungeon know if the adventurer has a light source
+    */
+    private boolean hasLightSource;
 
     /**
-    *Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
-    */
-    private Hashtable<Integer,String> adventurerRank;
-    
-    
+     * Hashtable that will take in a key, the adventurer's score, and return their rank based on their score
+     */
+    Hashtable<Integer, String> adventurerRank = new Hashtable<>();
+
+    /**
+     * +    *Needed a variable to store the direction a player must go back to in when entering a dark room.
+     * +
+     */
+    private String mustGoBack;
+
     static synchronized GameState instance() {
         if (theInstance == null) {
             theInstance = new GameState();
@@ -75,11 +81,56 @@ public class GameState {
     }
 
     private GameState() {
+
         inventory = new ArrayList<Item>();
+        health = 25;
+        score = 0;
+
+
+        int a = 0;
+        Integer aI = a;
+        int b = 5;
+        Integer bI = b;
+        int c = 10;
+        Integer cI = c;
+        int d = 15;
+        Integer dI = d;
+        int e = 20;
+        Integer eI = e;
+        int f = 25;
+        Integer fI = f;
+
+        String aS = "You are a scrub with no points";
+        String bS = "You're finally getting the hang of it, but you still need to get good";
+        String cS = "Good job there bud on not getting killed";
+        String dS = "If you got this far you might actually win";
+        String eS = "You are a great and respected Knight";
+        String fS = "Holy crap, you won";
+
+        adventurerRank.put(aI, aS);
+        adventurerRank.put(bI, bS);
+        adventurerRank.put(cI, cS);
+        adventurerRank.put(dI, dS);
+        adventurerRank.put(eI, eS);
+        adventurerRank.put(fI, fS);
+
+        String aH = "You start to feel cold, you're losing conciousness, confused and fearing the end is imminent";
+        String bH = "You're whole body is aching, much more of this and you fear you won't last long.";
+        String cH = "Meh, it's just a flesh wound";
+        String dH = "tis but a scratch";
+        String eH = "You are fit as a fiddle... with one broken string";
+        String fH = "You feel one hunna";
+
+        healthStatus.put(aI, aH);
+        healthStatus.put(bI, bH);
+        healthStatus.put(cI, cH);
+        healthStatus.put(dI, dH);
+        healthStatus.put(eI, eH);
+        healthStatus.put(fI, fH);
     }
 
     void restore(String filename) throws FileNotFoundException,
-        IllegalSaveFormatException, Dungeon.IllegalDungeonFormatException {
+            IllegalSaveFormatException, Dungeon.IllegalDungeonFormatException {
 
         Scanner s = new Scanner(new FileReader(filename));
 
@@ -91,31 +142,36 @@ public class GameState {
 
         if (!dungeonFileLine.startsWith(Dungeon.FILENAME_LEADER)) {
             throw new IllegalSaveFormatException("No '" +
-                Dungeon.FILENAME_LEADER + 
-                "' after version indicator.");
+                    Dungeon.FILENAME_LEADER +
+                    "' after version indicator.");
         }
 
         dungeon = new Dungeon(dungeonFileLine.substring(
-            Dungeon.FILENAME_LEADER.length()), false);
+                Dungeon.FILENAME_LEADER.length()), false);
         dungeon.restoreState(s);
 
         s.nextLine();  // Throw away "Adventurer:".
         String currentRoomLine = s.nextLine();
         adventurersCurrentRoom = dungeon.getRoom(
-            currentRoomLine.substring(CURRENT_ROOM_LEADER.length()));
-        if (s.hasNext()) {
-            String inventoryList = s.nextLine().substring(
-                INVENTORY_LEADER.length());
+                currentRoomLine.substring(CURRENT_ROOM_LEADER.length()));
+
+        String temp = s.nextLine();
+        if (temp.startsWith(INVENTORY_LEADER)) {
+            String inventoryList = temp.substring(INVENTORY_LEADER.length());
             String[] inventoryItems = inventoryList.split(",");
             for (String itemName : inventoryItems) {
                 try {
                     addToInventory(dungeon.getItem(itemName));
                 } catch (Item.NoItemException e) {
                     throw new IllegalSaveFormatException("No such item '" +
-                        itemName + "'");
+                            itemName + "'");
                 }
             }
+            health = Integer.parseInt(s.nextLine().substring(HEALTH_LEADER.length()));
+        } else {
+            health = Integer.parseInt(temp.substring(HEALTH_LEADER.length()));
         }
+        score = Integer.parseInt(s.nextLine().substring(SCORE_LEADER.length()));
     }
 
     void store() throws IOException {
@@ -131,10 +187,10 @@ public class GameState {
         w.println(CURRENT_ROOM_LEADER + adventurersCurrentRoom.getTitle());
         if (inventory.size() > 0) {
             w.print(INVENTORY_LEADER);
-            for (int i=0; i<inventory.size()-1; i++) {
+            for (int i = 0; i < inventory.size() - 1; i++) {
                 w.print(inventory.get(i).getPrimaryName() + ",");
             }
-            w.println(inventory.get(inventory.size()-1).getPrimaryName());
+            w.println(inventory.get(inventory.size() - 1).getPrimaryName());
         }
         w.println(HEALTH_LEADER + health);
         w.println(SCORE_LEADER + score);
@@ -144,43 +200,7 @@ public class GameState {
     void initialize(Dungeon dungeon) {
         this.dungeon = dungeon;
         adventurersCurrentRoom = dungeon.getEntry();
-
-        int a = 5;
-        Integer aI = a;
-        int b = 10;
-        Integer bI = b;
-        int c = 15;
-        Integer cI = c;
-        int d = 20;
-        Integer dI = d;
-        int e = 25;
-        Integer eI = e;
-
-        String aS = "You are a scrub with no points";
-        String bS = "You're finally getting the hang of it, but you still need to get good";
-        String cS = "Good job there bud on not getting killed";
-        String dS = "If you got this far you might actually win";
-        String eS = "You are a great and respected Knight";
-
-        adventurerRank.put(aI, aS);
-        adventurerRank.put(bI, bS);
-        adventurerRank.put(cI, cS);
-        adventurerRank.put(dI, dS);
-        adventurerRank.put(eI, eS);
-
-        String aH = "You start to feel cold, you're losing conciousness, confused and fearing the end is imminent";
-        String bH = "You're whole body is aching, much more of this and you fear you won't last long.";
-        String cH = "Meh, it's just a flesh wound";
-        String dH = "tis but a scratch";
-        String eH = "You feel one hunna";
-
-        healthStatus.put(aI,aH);
-        healthStatus.put(bI,bH);
-        healthStatus.put(cI,cH);
-        healthStatus.put(dI,dH);
-        healthStatus.put(eI,eH);
-
-
+        setMaxWeight();
     }
 
     ArrayList<String> getInventoryNames() {
@@ -190,6 +210,8 @@ public class GameState {
         }
         return names;
     }
+
+    public ArrayList<Item> getInventory() { return inventory; }
 
     void addToInventory(Item item) /* throws TooHeavyException */ {
         inventory.add(item);
@@ -239,82 +261,157 @@ public class GameState {
     Dungeon getDungeon() {
         return dungeon;
     }
-    
+
     /**
-    *Getter method that will return the current health that is an int
-    *@return int current health
-    */
-    public int getHealth()
-    {
+     * Getter method that will return the current health that is an int
+     *
+     * @return int current health
+     */
+    public int getHealth() {
         return this.health;
     }
 
-    public void changeHealth(int healthPoints) { health += healthPoints; }
+    public void changeHealth(int healthPoints) {
+        health += healthPoints;
+    }
 
-    
 
     /**
-    * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
-    *@return String message regarding adventurer health
-    */
-    public String getHealthMessage(int currentHealth)
-    {
+     * Getter method that will return a string from the healthStatus hashtable based on the adventurer's health
+     *
+     * @return String message regarding adventurer health
+     */
+    public String getHealthMessage(int currentHealth) {
 
-        int actualHealth = currentHealth;
-
-        if(currentHealth%5 != 0)
-        {
-            actualHealth = actualHealth - (currentHealth%5);
+        if (currentHealth <= 0) {
+            GameState.instance().die();
         }
-        return healthStatus.get(actualHealth);
+        Integer actualHealth = currentHealth;
+        if (currentHealth % 5 != 0) {
+            actualHealth = actualHealth - (currentHealth % 5);
+        }
+        return healthStatus.get(actualHealth) + "\n";
 
     }
 
 
     /**
-    *Getter method that will return the current score that is an int
-    *@return int current score
-    */
-    public int getScore()
-    {
+     * Getter method that will return the current score that is an int
+     *
+     * @return int current score
+     */
+    public int getScore() {
         return this.score;
     }
-    
+
     /**
-    * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
-    *@return String message regarding adventurer rank
-    */
+     * Getter method that will return a string from the adventurerRank hashtable based on the adventurer's score
+     *
+     * @return String message regarding adventurer rank
+     */
 
-    public String getRank(int currentScore)
-    {
-        int actualScore = currentScore;
+    public String getRank(int currentScore) {
+        Integer actualScore = currentScore;
 
-        if(currentScore%5 != 0)
-        {
-            actualScore = actualScore - (currentScore%5);
+        GameState.instance().checkHealth();
+
+        if (currentScore % 5 != 0) {
+            actualScore = actualScore - (currentScore % 5);
         }
-        return adventurerRank.get(actualScore);
+        return adventurerRank.get(actualScore) + "\n";
 
     }
 
-    public void removeItem(String itemName) throws Item.NoItemException
-    {
-        if(inventory.remove(itemName) == false){
-            throw new Item.NoItemException();
+    public void checkHealth() {
+        if (health <= 0) {
+            GameState.instance().die();
         }
-        inventory.remove(itemName);
     }
+
+    public void checkScore() {
+        if (score == MAX_SCORE || score > MAX_SCORE) {
+            GameState.instance().win();
+        }
+    }
+
+    public void removeItem(String itemName) throws Item.NoItemException {
+        GameState x = GameState.instance();
+        inventory.remove(x.getItemFromInventoryNamed(itemName));
+    }
+
+    public void win() {
+        System.out.println("You win, Congratulations!");
+        System.exit(0);
+    }
+
+    public void die() {
+        System.out.println("W A S T E D \n");
+        System.out.println("You died");
+        System.exit(0);
+    }
+
     /**
-    * Getter method that will return an int of the adventurer's total inventory weight
-    *@return String message regarding adventurer rank
-    */
-    public int getInventoryWeight() { return this.currrentWeight; }
-    
+     * Getter method that will return an int of the adventurer's total inventory weight
+     *
+     * @return String message regarding adventurer rank
+     */
+    public int getInventoryWeight() {
+        return this.currentWeight;
+    }
+
     /**
-    * Method that will check the current weight of inventory is lower than MAX_WEIGHT
-    *@return boolean true if current weight is less than MAX_WEIGHT, false if greater than MAX_WEIGHT
-    */
-    public boolean checkWeight() { return currrentWeight <= MAX_WEIGHT; }
-   
-    
+     * Method that will check the current weight of inventory is lower than MAX_WEIGHT
+     *
+     * @return boolean true if current weight is less than MAX_WEIGHT, false if greater than MAX_WEIGHT
+     */
+    public boolean checkWeight() {
+        return currentWeight <= maxWeight;
+    }
+
+    public void setWeight(int x) {
+        currentWeight += x;
+    }
+
+    public void setScore(int b) {
+        score += b;
+    }
+
+    public String goBack() {
+        return mustGoBack;
+    }
+    public boolean hasLight(){
+        return hasLightSource;
+    }
+    public void setLightSource(boolean b){
+        if(b)
+            hasLightSource = true;
+        else
+            hasLightSource = false;
+    }
+
+    public void setGoBack(String dir) {
+        switch (dir) {
+            case "s":
+                mustGoBack = "n";
+            case "n":
+                mustGoBack = "s";
+            case "w":
+                mustGoBack = "e";
+            case "e":
+                mustGoBack = "w";
+            case "u":
+                mustGoBack = "d";
+            case "d":
+                mustGoBack = "u";
+        }
+
+    }
+
+    public void setMaxWeight(){
+        int sum = 0;
+        for(Item i : dungeon.getItems().values())
+            sum+= i.getWeight();
+        maxWeight = (int) Math.round( sum *.75);
+
+    }
 }

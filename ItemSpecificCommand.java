@@ -29,19 +29,20 @@ class ItemSpecificCommand extends Command {
         String[] events = itemReferredTo.getEventsForVerb(verb);
         if(events != null) {
             for(String event : events) {
-                switch (event.substring(0, event.indexOf('('))) {
-                    case "Transform":
-                        msg += "\n" + itemReferredTo.transform(event.substring(event.indexOf("(") + 1, event.length() - 1));
-                        break;
-                    case "Wound":
-                        msg += "\n" + itemReferredTo.wound(Integer.parseInt(event.substring(event.indexOf("(") + 1, event.length() - 1)));
-                        break;
-                    case "Teleport":
-                        msg += "\n" + itemReferredTo.teleport(event.substring(event.indexOf("(") + 1, event.length() - 1));
-                        break;
-                    case "Disappear":
-                        msg += "\n" + itemReferredTo.disappear(itemReferredTo);
-                        break;
+                if(event.startsWith("Transform")) {
+                    msg += "\n" + itemReferredTo.transform(event.substring(event.indexOf("(") + 1, event.length() - 1));
+                } else if(event.startsWith("Wound")) {
+                    msg += "\n" + itemReferredTo.wound(Integer.parseInt(event.substring(event.indexOf("(") + 1, event.length() - 1)));
+                } else if(event.startsWith("Teleport")) {
+                    msg += "\n" + itemReferredTo.teleport();
+                } else if(event.startsWith("Disappear")) {
+                    msg += "\n" + itemReferredTo.disappear(itemReferredTo);
+                } else if(event.startsWith("Score")) {
+                    GameState.instance().setScore(Integer.parseInt(event.substring(event.indexOf("(") + 1, event.length() - 1)));
+                } else if(event.startsWith("Win")){
+                    GameState.instance().win();
+                } else if(event.startsWith("Die")){
+                    GameState.instance().die();
                 }
             }
         }
